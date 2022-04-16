@@ -8,7 +8,7 @@ installer_dir_path=$(dirname $installer_path)
 
 # Download alby companion executable
 # TODO: load latest (see: https://github.com/getAlby/alby-installer-macos/blob/main/downloader.rb)
-download_url=https://github.com/getAlby/alby-companion-rs/releases/download/v0.5.0/alby-companion-rs_v0.5.0_x86_64-unknown-linux-musl.tar.gz
+download_url=https://github.com/getAlby/alby-companion-rs/releases/download/v0.5.1/alby-companion-rs_v0.5.1_x86_64-unknown-linux-musl.tar.gz
 wget -O alby.tar.gz $download_url
 tar -xf alby.tar.gz
 
