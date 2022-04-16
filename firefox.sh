@@ -19,6 +19,7 @@ executable_path=$(realpath ~/.config/alby/alby)
 
 # path for native messaging JSON
 native_host_path=~/.mozilla/native-messaging-hosts/alby.json
+mkdir -p $(dirname $native_host_path)
 
 echo "{
   \"name\": \"alby\",

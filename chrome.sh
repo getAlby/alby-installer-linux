@@ -19,6 +19,7 @@ executable_path=$(realpath ~/.config/alby/alby)
 
 
 native_host_path=~/.config/google-chrome/NativeMessagingHosts/alby.json
+mkdir -p $(dirname $native_host_path)
 
 echo "{
   \"name\": \"alby\",
