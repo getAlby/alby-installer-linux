@@ -14,6 +14,12 @@ Open the terminal in this directory and run:
 
     $ ./firefox.sh
 
+## Brave
+
+Open the terminal in this directory and run:
+
+    $ ./brave.sh
+
 ## Help
 
 Please contact support@getalby.com for help.
