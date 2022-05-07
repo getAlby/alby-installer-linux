@@ -20,6 +20,12 @@ Open the terminal in this directory and run:
 
     $ ./brave.sh
 
+## Chromium
+
+Open the terminal in this directory and run:
+
+    $ ./chromium.sh
+
 ## Help
 
 Please contact support@getalby.com for help.
