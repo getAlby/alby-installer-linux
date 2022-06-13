@@ -1,9 +1,6 @@
 import Browser from "./Browser.js";
 
-
 export default class Brave extends Browser {
-
-
     constructor() {
         super({
             name: "Brave",
@@ -18,20 +15,14 @@ export default class Brave extends Browser {
             },
             icon: "./assets/browser/brave.png",
             extensionUrl: `https://chrome.google.com/webstore/detail/alby-bitcoin-lightning-wa/iokeahhehimjnekafflcihljlcjccdbe`,
-            nativeMessagingConfig:{
+            nativeMessagingConfig: {
                 "name": "alby",
                 "description": "Alby native messaging to connect to nodes behind Tor",
                 "path": "%EXE%",
                 "type": "stdio",
-                "allowed_origins": [ "chrome-extension://iokeahhehimjnekafflcihljlcjccdbe/" ]
-              },
-            nativeMessagingPath:"%DIR%/NativeMessagingHosts/alby.json"
-
+                "allowed_origins": ["chrome-extension://iokeahhehimjnekafflcihljlcjccdbe/"]
+            },
+            nativeMessagingPath: "%DIR%/NativeMessagingHosts/alby.json"
         });
     }
-
-
-
-
-
 }

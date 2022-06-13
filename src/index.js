@@ -15,9 +15,6 @@ const BROWSERS = [
 ];
 
 async function createBrowserWidget(browserLayout, browser, progressEl, progressText) {
-
-    browser.found = await browser.find();
-
     // build ui components if needed
     if (!browser.cntEl) {
         const layout = new FlexLayout();
@@ -28,11 +25,11 @@ async function createBrowserWidget(browserLayout, browser, progressEl, progressT
 
 
         const titleEl = new QLabel();
-        titleEl.setText(await browser.name());
+        titleEl.setText(await browser.getName());
         titleEl.setObjectName("browser-title");
         layout.addWidget(titleEl);
 
-        const iconEl = Utils.newResponsiveImage(await browser.icon())
+        const iconEl = Utils.newResponsiveImage(await browser.getIcon())
         iconEl.setObjectName("browser-icon");
         layout.addWidget(iconEl);
 
@@ -48,10 +45,11 @@ async function createBrowserWidget(browserLayout, browser, progressEl, progressT
         browserLayout.addWidget(browser.cntEl);
 
         browser.installBtnEl.addEventListener("clicked", async () => {
-            const companionPath = !browser.found ? undefined : await browser.getCompanionPath();
-            const latestRelease = await Companion.getLastRelease();
-    
             if (!browser.found) return;
+
+            const companionPath = await browser.getCompanionPath();
+            const latestRelease = await Companion.getLastRelease();
+
             if (browser.installStatus == 1) {
                 await Companion.remove(companionPath);
                 await browser.uninstallNativeMessaging();
@@ -67,57 +65,49 @@ async function createBrowserWidget(browserLayout, browser, progressEl, progressT
             await reloadBrowsers(browserLayout, progressEl, progressText);
         });
     }
- 
 
-    // update ui components
-    const companionPath = !browser.found ? undefined : await browser.getCompanionPath();
-    const latestRelease = await Companion.getLastRelease();
-    const currentVersion = !browser.found ? undefined : await Companion.getInstalledVersion(companionPath);
+    browser.found = await browser.find();
 
-    // 0 = not installed, 1 = installed and updated, 2 = installed outdated
-    browser.installStatus = !browser.found || !await browser.isNativeMessagingInstalled() || !currentVersion ? 0 : (currentVersion == latestRelease.version ? 1 : 2);
+    if (browser.found) {
+        // update ui components
+        const companionPath = await browser.getCompanionPath();
+        const latestRelease = await Companion.getLastRelease();
+        const currentVersion = await Companion.getInstalledVersion(companionPath);
 
-    browser.companionVersionEl.setText("");
-    browser.companionVersionEl.setInlineStyle("");
+        // 0 = not installed, 1 = installed and updated, 2 = installed outdated
+        browser.installStatus = !await browser.isNativeMessagingInstalled() || !currentVersion ? 0 : (currentVersion == latestRelease.version ? 1 : 2);
 
-    if (!browser.found) {
+        browser.companionVersionEl.setText("");
+        browser.companionVersionEl.setInlineStyle("");
+
+        switch (browser.installStatus) {
+            case 0: {
+                browser.installBtnEl.setText("Enable");
+                break;
+            }
+            case 1: {
+                browser.companionVersionEl.setText(currentVersion);
+                browser.installBtnEl.setText("Disable");
+                break;
+            }
+            case 2: {
+                browser.companionVersionEl.setText(currentVersion);
+                browser.companionVersionEl.setInlineStyle("color:red;");
+                browser.installBtnEl.setText("Update");
+                break;
+            }
+        }
+    } else {
         browser.companionVersionEl.setText("Browser not found");
     }
-
-    switch (browser.installStatus) {
-        case 0: {
-            browser.installBtnEl.setText("Enable");
-            break;
-        }
-        case 1: {
-            browser.companionVersionEl.setText(currentVersion);
-            browser.installBtnEl.setText("Disable");
-            break;
-        }
-        case 2: {
-            browser.companionVersionEl.setText(currentVersion);
-            
-            browser.companionVersionEl.setInlineStyle("color:red;");
-
-            browser.installBtnEl.setText("Update");
-            break;
-        }
-    }
-   
-
 
 }
 
 async function reloadBrowsers(browserLayout, progressEl, progressText) {
-    for (const browser of BROWSERS) {       
+    for (const browser of BROWSERS) {
         await createBrowserWidget(browserLayout, browser, progressEl, progressText);
     }
-
 }
-
-
-
-
 
 async function main() {
     const win = new QMainWindow();
@@ -194,4 +184,6 @@ async function main() {
     win.show();
     global.win = win;
 }
+
+
 main();

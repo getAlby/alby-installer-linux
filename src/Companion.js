@@ -12,8 +12,8 @@ const CONFIG = {
         chmod: "766"
     }
 }
-export default class Companion {
 
+export default class Companion {
 
     static getOsArch(os, arch) {
         if (os == null) os = process.platform;
@@ -24,8 +24,8 @@ export default class Companion {
         }
         return [os, arch];
     }
-    static async getLastRelease(os, arch) {
 
+    static async getLastRelease(os, arch) {
         let data;
         try {
             if (this.latestRelease) return this.latestRelease;
@@ -59,7 +59,6 @@ export default class Companion {
 
             for (const asset of data.assets) {
                 if (asset.name.indexOf(`_${arch}`) != -1 && asset.name.indexOf(`-${os}`) != -1 && asset.name.endsWith(config.supportedExt)) {
-
                     return this.latestRelease = {
                         version: data.name.trim(),
                         name: asset.name,
@@ -83,7 +82,7 @@ export default class Companion {
     static async getInstalledVersion(path) {
         try {
             const versioningFile = Path.join(path, "alby-companion.version");
-            return await Utils.fileExists(versioningFile) ? (await Fs.readFile(versioningFile,{encoding:"utf-8"})).trim() : undefined;
+            return await Utils.fileExists(versioningFile) ? (await Fs.readFile(versioningFile, { encoding: "utf-8" })).trim() : undefined;
         } catch (e) {
             console.error(e);
             return undefined;
@@ -92,7 +91,6 @@ export default class Companion {
 
     static async remove(destination) {
         if (await Utils.fileExists(destination)) await Fs.rename(destination, `${destination}-old.${Date.now()}`);
-
     }
 
     static async download(release, destination, callback, tmp) {
@@ -125,10 +123,10 @@ export default class Companion {
             // check signature
             if (signature !== expectedSign) throw "Invalid signature!";
         }
+
         // extract
         callback("Extracting...", 1);
         await Utils.extract(downloadedFile, destination, callback);
-
 
         // write metadata
         await Fs.writeFile(Path.join(destination, "alby-companion.exc"), release.executable);
@@ -138,9 +136,7 @@ export default class Companion {
             callback("Chmod...", 1);
             await Fs.chmod(Path.join(destination, release.executable), release.chmod);
         }
-
         callback("Done.", 1);
-
     }
 }
 

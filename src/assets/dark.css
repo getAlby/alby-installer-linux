@@ -1,6 +1,7 @@
 #container {
     background-color: #272727;
 }
+
 QPushButton {
     background-color: #272727;
     color: #cacaca;
@@ -17,7 +18,7 @@ QLabel {
 }
 
 QProgressBar {
-    background:#272727;
+    background: #272727;
     text-align: center;
     font-size: 2vh;
     font-weight: bold;
@@ -25,16 +26,12 @@ QProgressBar {
 
 QProgressBar::chunk {
     background-color: #585858;
-
 }
 
-#browser-title{
+#browser-title {
     color: #272727;
-  
 }
 
 #browser {
-   
     background-color: #585858;
-
 }

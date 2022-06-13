@@ -2,7 +2,6 @@ import Browser from "./Browser.js";
 
 
 export default class Firefox extends Browser {
-
     constructor() {
         super({
             name: "Mozilla Firefox",
@@ -15,28 +14,19 @@ export default class Firefox extends Browser {
                     "%HOME%/snap/firefox/current/.config/mozilla/",
                     "%HOME%/.mozilla",
                     "%HOME%/.config/mozilla"
-     
+
                 ]
             },
             icon: "./assets/browser/firefox.png",
             extensionUrl: `https://addons.mozilla.org/it/firefox/addon/alby/`,
-            nativeMessagingConfig:{
+            nativeMessagingConfig: {
                 "name": "alby",
                 "description": "Alby native messaging to connect to nodes behind Tor",
                 "path": "%EXE%",
                 "type": "stdio",
                 "allowed_extensions": ["extension@getalby.com"]
             },
-            nativeMessagingPath:"%DIR%/native-messaging-hosts/alby.json"
-
-
+            nativeMessagingPath: "%DIR%/native-messaging-hosts/alby.json"
         });
     }
-
-
-
-
-
-
-
 }
