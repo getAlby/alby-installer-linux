@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=AlbyInstaller
+Exec=AppRun %F
+Icon=alby_icon
+Comment=Installer for Alby Companion
+Terminal=true
+Categories=Utility;

@@ -1,0 +1,91 @@
+
+
+QPushButton {
+
+    border-style:solid;
+    border-width: 0.2vh ;
+    border-radius: 0.5vh;
+    margin: 0.2vh;
+    height: 6vh;
+    font-weight: bold;
+}
+
+
+QProgressBar {
+    text-align: center;
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+
+
+#container{ 
+    align-items: 'center';
+    justify-content: 'center';
+}
+
+
+#browsers{
+    margin-top: 1vh;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: 'center';
+    justify-content: 'center';
+    height:300px;
+}
+
+#title{
+    font-size: 5vh;
+
+}
+
+#subTitle{
+    font-size: 3vh;
+}
+#icon {
+    width:22vw;
+}
+
+#progress{
+
+    width: 99vw;
+}
+
+
+#progress-text{
+    font-family: monospace;
+    font-size: 2vh;
+}
+
+#browser-title{
+    font-size: 2.7vh;
+    font-weight: bold;
+}
+
+#browser {
+    align-items: 'center';
+    justify-content: 'center';
+    padding: 2vh;
+    margin: 0.5vw;
+    border-radius: 0.8vh;
+}
+#browser-icon {
+    width:12vw;
+    margin-top: 2vh;
+    height: 16vw;
+
+}
+
+#browser-install,
+#browser-install-ext{
+    width: 18vw;
+
+}
+
+
+#version{
+    font-family: monospace;
+    font-size: 1.8vh;
+    padding: 0.5vh;
+    width: 14vw;
+}

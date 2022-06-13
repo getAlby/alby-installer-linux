@@ -1,0 +1,69 @@
+name: Build Alby Installer
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  BuildFat:
+    name: Build for linux x86_64
+    runs-on: ubuntu-18.04
+    env:
+      ALBY_COMPANION_VERSION: "latest"
+      ALBY_COMPANION_FILE: "linux-x86_64.tar.gz"
+      
+    steps:
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y cmake build-essential qt5-default
+    
+      - name: Clone the repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+         
+      - name: Build   
+        run: |
+          ./build.sh
+          
+      - name: Upload nodegui packer output
+        uses: actions/upload-artifact@master
+        with:
+          name: AlbyInstaller-x86_64-linux-broken
+          path: deploy/appimage/AlbyInstaller-x86_64.AppImage-broken
+
+      - name: Upload installer
+        uses: actions/upload-artifact@master
+        with:
+          name: AlbyInstaller-x86_64-linux
+          path: deploy/appimage/AlbyInstaller-x86_64.AppImage
+
+  DeployRelease:
+    needs: [BuildFat]
+    name: Deploy Release
+    runs-on: ubuntu-18.04
+    if: github.event_name == 'release'
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: AlbyInstaller-x86_64-linux
+          path: dist/
+      - name: Deploy to GitHub Releases
+        run: |
+          echo "${GITHUB_EVENT_PATH}"
+          cat ${GITHUB_EVENT_PATH}
+          releaseId=$(jq --raw-output '.release.id' ${GITHUB_EVENT_PATH})
+          
+          filename="AlbyInstaller-x86_64-linux"
+          mv ./dist/AlbyInstaller* $filename
+
+          url="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$releaseId/assets?name=$(basename $filename)"
+          echo "Upload to $url"
+          curl -L \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/octet-stream" \
+          --data-binary @"$filename" \
+          "$url"
