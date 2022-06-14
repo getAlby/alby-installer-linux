@@ -1,0 +1,25 @@
+#container {
+    background-color: #ffffff;
+}
+
+QPushButton {
+    background-color: #f8c455;
+    color: #2c2c2c;
+    border-color: #3b82f6;
+}
+
+QLabel {
+    color: #2c2c2c;
+}
+
+QProgressBar {
+    background: #dfdfdf;
+}
+
+QProgressBar::chunk {
+    background-color: #f8c455;
+}
+
+#browser-title {
+    color: #2c2c2c;
+}
